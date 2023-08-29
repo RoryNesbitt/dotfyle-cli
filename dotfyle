@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+is_ignored() {
+  found=false
+  case "$1" in
+    *"." | *".." | *"*")
+      found=true
+      return
+      ;;
+  esac
+  $found
+}
+
+find_init() {
+  absolute="$(realpath -s "$1")"
+  if ls "$absolute"/init.lua 1> /dev/null 2>&1 \
+  || ls "$absolute"/init.vim 1> /dev/null 2>&1; then
+    echo "Found init file in $absolute"
+  else
+    for x in "*" ".*"; do
+      for pathname in "$absolute/"$x; do
+        if is_ignored "$pathname"; then
+          continue # skip these directories
+        elif [ -d "$pathname" ]; then
+          find_init "$pathname"
+        fi
+      done
+    done
+  fi
+}
+
+find_init "$1"
