@@ -12,14 +12,13 @@ is_ignored() {
 }
 
 find_init() {
-  path="$1"
-  if ls "$path"/init.lua 1> /dev/null 2>&1 \
-  || ls "$path"/init.vim 1> /dev/null 2>&1; then
-    path=${path#"$HOME/.config/dotfyle/"}
+  if ls "$1"/init.lua 1> /dev/null 2>&1 \
+  || ls "$1"/init.vim 1> /dev/null 2>&1; then
+    path=${1#"$HOME/.config/dotfyle/"}
     echo "$path"
   else
     for x in "*" ".*"; do
-      for pathname in "$path/"$x; do
+      for pathname in "$1/"$x; do
         if is_ignored "$pathname"; then
           continue # skip these directories
         elif [ -d "$pathname" ]; then
@@ -39,4 +38,5 @@ run() {
   NVIM_APPNAME="$appname" nvim
 }
 
+# find_init "$HOME/.config/dotfyle"
 run
