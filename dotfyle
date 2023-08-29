@@ -3,7 +3,7 @@
 is_ignored() {
   found=false
   case "$1" in
-    *"." | *".." | *"*")
+    *"." | *".." | *"*" | *".git")
       found=true
       return
       ;;
@@ -12,13 +12,14 @@ is_ignored() {
 }
 
 find_init() {
-  absolute="$(realpath -s "$1")"
-  if ls "$absolute"/init.lua 1> /dev/null 2>&1 \
-  || ls "$absolute"/init.vim 1> /dev/null 2>&1; then
-    echo "Found init file in $absolute"
+  path="$1"
+  if ls "$path"/init.lua 1> /dev/null 2>&1 \
+  || ls "$path"/init.vim 1> /dev/null 2>&1; then
+    path=${path#"$HOME/.config/dotfyle/"}
+    echo "$path"
   else
     for x in "*" ".*"; do
-      for pathname in "$absolute/"$x; do
+      for pathname in "$path/"$x; do
         if is_ignored "$pathname"; then
           continue # skip these directories
         elif [ -d "$pathname" ]; then
@@ -29,4 +30,13 @@ find_init() {
   fi
 }
 
-find_init "$1"
+select_config() {
+  find_init "$HOME/.config/dotfyle" | fzf --prompt="Config: " --preview="cat $HOME/.config/dotfyle/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
+}
+
+run() {
+  appname="dotfyle/$(select_config)"
+  NVIM_APPNAME="$appname" nvim
+}
+
+run
