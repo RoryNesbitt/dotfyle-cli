@@ -34,8 +34,10 @@ select_config() {
 }
 
 run() {
-  appname="dotfyle/$(select_config)"
-  NVIM_APPNAME="$appname" nvim
+  appname="$(select_config)"
+  if [ -n "$appname" ]; then
+    NVIM_APPNAME="dotfyle/$appname" nvim
+  fi
 }
 
 # find_init "$HOME/.config/dotfyle"
