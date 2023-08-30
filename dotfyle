@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+dir_name="dotfyle"
+
 is_ignored() {
   found=false
   case "$1" in
@@ -14,7 +16,7 @@ is_ignored() {
 find_init() {
   if ls "$1"/init.lua 1> /dev/null 2>&1 \
   || ls "$1"/init.vim 1> /dev/null 2>&1; then
-    path=${1#"$HOME/.config/dotfyle/"}
+    path=${1#"$HOME/.config/$dir_name/"}
     echo "$path"
   else
     for x in "*" ".*"; do
@@ -30,15 +32,15 @@ find_init() {
 }
 
 select_config() {
-  find_init "$HOME/.config/dotfyle" | fzf --prompt="Config: " --preview="cat $HOME/.config/dotfyle/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
+  find_init "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="cat $HOME/.config/$dir_name/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
 }
 
 run() {
   appname="$(select_config)"
   if [ -n "$appname" ]; then
-    NVIM_APPNAME="dotfyle/$appname" nvim
+    NVIM_APPNAME="$dir_name/$appname" nvim
   fi
 }
 
-# find_init "$HOME/.config/dotfyle"
+# find_init "$HOME/.config/$dir_name"
 run
