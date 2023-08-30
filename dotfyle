@@ -42,5 +42,19 @@ run() {
   fi
 }
 
+purge() {
+  rm -rf "$HOME/.config/$dir_name/$1"
+  rm -rf "$HOME/.cache/$dir_name/$1"
+  rm -rf "$HOME/.local/share/$dir_name/$1"
+  rm -rf "$HOME/.local/state/$dir_name/$1"
+}
+
+remove() {
+  appname="$(select_config)"
+  if [ -n "$appname" ]; then
+    purge "$appname"
+  fi
+}
+
 # find_init "$HOME/.config/$dir_name"
 run
