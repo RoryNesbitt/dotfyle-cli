@@ -36,17 +36,19 @@ select_config() {
 }
 
 run() {
+  location="$HOME/.config/$dir_name"
   case "$@" in
     "")
-      #TODO: check last used config
+      if [ -f "$location/.last_used" ];then
+        appname=$(cat "$location/.last_used")
+      fi
       ;;
     "-a" | "--ask")
       shift
       ;;
     "-s"*| "--select"*)
       shift
-      location="$HOME/.config/$dir_name/$1"
-      if [ -f "$location/init.lua" ] || [ -f "location/init.vim" ]; then
+      if [ -f "$location/$1/init.lua" ] || [ -f "$location/$1/init.vim" ]; then
         appname="$1"
       else
         echo config not found
@@ -62,6 +64,7 @@ run() {
     appname="$(select_config)"
   fi
   if [ -n "$appname" ]; then
+    echo "$appname" > "$HOME/.config/$dir_name/.last_used"
     NVIM_APPNAME="$dir_name/$appname" nvim
   fi
 }
