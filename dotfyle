@@ -43,6 +43,12 @@ run() {
 }
 
 purge() {
+  if [ "$1" = "-f" ] || [ "$1" = "--force" ]; then
+    shift
+  elif [ $# = 0 ]; then
+    echo "purging without force sucks"
+    exit
+  fi
   rm -rf "$HOME/.config/$dir_name/$1"
   rm -rf "$HOME/.cache/$dir_name/$1"
   rm -rf "$HOME/.local/share/$dir_name/$1"
@@ -58,7 +64,7 @@ remove() {
 
 case "$@" in
   *"-h" | *"--help" | "-h"* | "--help"*)
-    echo help "$@"
+    help "$@"
     ;;
   "" | "-a" | "--ask" | "-s" | "--select")
     run "$@"
