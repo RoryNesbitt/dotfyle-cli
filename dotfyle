@@ -35,12 +35,23 @@ select_config() {
   find_init "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="cat $HOME/.config/$dir_name/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
 }
 
+check_config() {
+  if [ -f "$location/$1/init.lua" ] || [ -f "$location/$1/init.vim" ]; then
+    true
+  else
+    false
+  fi
+}
+
 run() {
   location="$HOME/.config/$dir_name"
   case "$@" in
     "")
       if [ -f "$location/.last_used" ];then
-        appname=$(cat "$location/.last_used")
+        last_used=$(cat "$location/.last_used")
+        if check_config "$last_used"; then
+          appname="$last_used"
+        fi
       fi
       ;;
     "-a" | "--ask")
@@ -48,7 +59,7 @@ run() {
       ;;
     "-s"*| "--select"*)
       shift
-      if [ -f "$location/$1/init.lua" ] || [ -f "$location/$1/init.vim" ]; then
+      if check_config "$1"; then
         appname="$1"
       else
         echo config not found
