@@ -36,7 +36,31 @@ select_config() {
 }
 
 run() {
-  appname="$(select_config)"
+  case "$@" in
+    "")
+      #TODO: check last used config
+      ;;
+    "-a" | "--ask")
+      shift
+      ;;
+    "-s"*| "--select"*)
+      shift
+      location="$HOME/.config/$dir_name/$1"
+      if [ -f "$location/init.lua" ] || [ -f "location/init.vim" ]; then
+        appname="$1"
+      else
+        echo config not found
+        exit 1
+      fi
+      ;;
+    *)
+      echo Unknown option provided
+      exit 1
+      ;;
+  esac
+  if [ -z "$appname" ]; then
+    appname="$(select_config)"
+  fi
   if [ -n "$appname" ]; then
     NVIM_APPNAME="$dir_name/$appname" nvim
   fi
