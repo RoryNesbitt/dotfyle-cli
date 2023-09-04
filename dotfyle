@@ -56,5 +56,28 @@ remove() {
   fi
 }
 
-# find_init "$HOME/.config/$dir_name"
-run
+case "$@" in
+  *"-h" | *"--help" | "-h"* | "--help"*)
+    echo help "$@"
+    ;;
+  "" | "-a" | "--ask" | "-s" | "--select")
+    run "$@"
+    ;;
+  "run"*)
+    shift
+    run "$@"
+    ;;
+  "rm"*)
+    shift
+    remove "$@"
+    ;;
+  "purge"*)
+    shift
+    purge "$@"
+    ;;
+  *)
+    echo Invalid option provided
+    echo Exiting
+    exit 1
+    ;;
+esac
