@@ -4,14 +4,14 @@ dotfyle-cli
 A command line tool to test out Neovim configs found on
 [dotfyle](https://dotfyle.com) (or github)
 
-### Requirements
+## Requirements
 
 - fzf - dotfyle-cli is posix complient so should run anywhere as long as
 [fzf](https://github.com/junegunn/fzf) is available
 - git - Some features of dotfyle-cli will only work if git is available
   (install/update)
 
-### installation
+## installation
 
 assumes you have `~/.local/bin` in your PATH, feel free to change the directory
 ```sh
@@ -27,9 +27,9 @@ echo 'export PATH="$HOME/.local/dotfyle-cli:$PATH"' >> ~/.bashrc
 This is more bloated but will make getting updates simpler, however updates are
 likely to be rare so this is not the recommended method of installation.
 
-### Using dotfyle-cli
+## Using dotfyle-cli
 
-#### Config installation
+### Config installation
 
 start by installing some configs
 ```sh
@@ -38,7 +38,7 @@ dotfyle install https://github.com/folke/dot/tree/master/nvim
 dotfyle install RoryNesbitt/RNvim
 ```
 
-#### Running Neovim
+### Running Neovim
 
 Then select which one you want to start Neovim with using
 ```sh
@@ -52,7 +52,7 @@ use
 dotfyle run --ask
 ```
 
-#### Getting more help/config management
+### Getting more help/config management
 
 dotfyle-cli can also remove or update configs, check out the options with
 ```sh
