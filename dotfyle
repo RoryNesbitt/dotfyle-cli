@@ -112,6 +112,73 @@ remove() {
   fi
 }
 
+help() {
+cmd=$2
+  case "$cmd" in
+    "run")
+      echo "Usage:
+  dotfyle run [options] Select a config to load neovim with.
+  dotfyle [options]     Alias of above.
+
+                        This option will load the last used
+                        config, or if that is unavailable it
+                        will list out all configs with fzf
+                        to select from.
+
+Options:
+  -h|--help             Print the help. Can be used after an above option
+  -a|--ask              Ask which config to load
+  -s|--select [config]  Select the specific config
+  "
+      ;;
+    "rm" | "remove")
+      echo "Usage:
+  dotfyle rm            Select a config to be removed.
+  dotfyle rm [config]   Remove the config specified.
+  dotfyle remove        Alias of above
+
+                        This option allows a config to be
+                        removed by either the cli argument
+                        or by selection with fzf.
+
+                        NOTE: This option does not currently
+                        account for monorepos and will
+                        therefore leave the contents of the
+                        git repo except for the neovim config.
+                        However, it will also remove any related
+                        files, making it still a useful option
+                        before manually removing the repo.
+                        Monorepo support is on the TODO
+  "
+      ;;
+    "purge")
+      echo "Usage:
+  dotfyle purge         Remove all configs and related files.
+
+                        This option will completely remove the
+                        neovim-configs directory from all relevant
+                        locations.
+
+Options:
+  -f|--force            Don't ask for confirmation before purging.
+  "
+      ;;
+    *)
+      echo "Usage:
+  dotfyle run [options] Select a config to load neovim with
+  dotfyle rm            Remove a config and related files
+  dotfyle purge         Remove all configs and related files
+  dotfyle               Alias of dotfyle run
+
+Options:
+  -h|--help             Print the help. Can be used after an above option
+  -a|--ask              Ask which config to load
+  -s|--select [config]  Select the specific config
+  "
+      ;;
+  esac
+}
+
 case "$@" in
   *"-h" | *"--help" | "-h"* | "--help"*)
     help "$@"
