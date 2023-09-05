@@ -141,6 +141,8 @@ install() {
     substring="${repo%*"-"*}"
     if [ "$substring" != "$repo" ]; then
       install "$substring"
+    else
+      echo Provided repo could not be found
     fi
   else
     git clone --depth=1 git@github.com:"$repo" "$HOME/.config/$dir_name/$repo"
