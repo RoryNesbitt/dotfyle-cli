@@ -61,8 +61,8 @@ dotfyle --help
 
 On removing a config the related files are also removed from
 ```sh
-"$HOME/.config/neovim-configs"
-"$HOME/.cache/neovim-configs"
-"$HOME/.local/share/neovim-configs"
-"$HOME/.local/state/neovim-configs"
+~/.config/neovim-configs
+~/.cache/neovim-configs
+~/.local/share/neovim-configs
+~/.local/state/neovim-configs
 ``````
