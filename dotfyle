@@ -112,6 +112,21 @@ remove() {
   fi
 }
 
+install() {
+  repo="$1"
+  repo=${repo#*github.com[/:]}
+  repo=${repo#*dotfyle.com[/:]}
+  repo=${repo%.git}
+  if ! git ls-remote --exit-code git@github.com:"$repo" >/dev/null 2>&1; then
+    substring="${repo%*"-"*}"
+    if [ "$substring" != "$repo" ]; then
+      install "$substring"
+    fi
+  else
+    git clone --depth=1 git@github.com:"$repo" "$HOME/.config/$dir_name/$repo"
+  fi
+}
+
 help() {
 
   case "$1" in
@@ -206,6 +221,10 @@ case "$@" in
   "purge"*)
     shift
     purge "$@"
+    ;;
+  "install"* | "download"*)
+    shift
+    install "$@"
     ;;
   *)
     echo Invalid option provided
