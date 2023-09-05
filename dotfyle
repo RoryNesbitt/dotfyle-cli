@@ -187,6 +187,16 @@ Options:
   -f|--force            Don't ask for confirmation before purging.
   "
       ;;
+    "install" | "download")
+      echo "Usage:
+  dotfyle install [URL] Install a config from the url provided.
+  dotfyle download      Alias of above.
+
+                        This option lets you install a config from
+                        a dotfyle or github url to the neovim-configs
+                        directory.
+  "
+      ;;
     *)
       echo "Usage:
   dotfyle run [options] Select a config to load neovim with
