@@ -237,6 +237,8 @@ Options:
   dotfyle run [options] Select a config to load neovim with
   dotfyle rm            Remove a config and related files
   dotfyle purge         Remove all configs and related files
+  dotfyle install [URL] Install a config from the url provided.
+  dotfyle update        Update all installed configs
   dotfyle               Alias of dotfyle run
 
 Options:
