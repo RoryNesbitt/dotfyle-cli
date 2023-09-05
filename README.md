@@ -29,7 +29,7 @@ likely to be rare so this is not the recommended method of installation.
 
 ### Using dotfyle-cli
 
-## Config installation
+#### Config installation
 
 start by installing some configs
 ```sh
@@ -37,7 +37,7 @@ dotfyle install https://dotfyle.com/codicocodes/dotfiles-nvim
 dotfyle install https://github.com/RoryNesbitt/RNvim
 ```
 
-## Running Neovim
+#### Running Neovim
 
 Then select which one you want to start Neovim with using
 ```sh
@@ -51,7 +51,7 @@ use
 dotfyle run --ask
 ```
 
-## Getting more help/config management
+#### Getting more help/config management
 
 dotfyle-cli can also remove or update configs, check out the options with
 ```sh
