@@ -31,6 +31,24 @@ find_init() {
   fi
 }
 
+find_git() {
+  #TODO: Combine this with find_init
+  if ls "$1"/.git 1> /dev/null 2>&1; then
+    path=${1#"$HOME/.config/$dir_name/"}
+    echo "$path"
+  else
+    for x in "*" ".*"; do
+      for pathname in "$1/"$x; do
+        if is_ignored "$pathname"; then
+          continue # skip these directories
+        elif [ -d "$pathname" ]; then
+          find_git "$pathname"
+        fi
+      done
+    done
+  fi
+}
+
 select_config() {
   find_init "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="cat $HOME/.config/$dir_name/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
 }
@@ -125,6 +143,16 @@ install() {
   else
     git clone --depth=1 git@github.com:"$repo" "$HOME/.config/$dir_name/$repo"
   fi
+}
+
+update() {
+  location="$HOME/.config/$dir_name"
+  repos=$(find_git "$location")
+  for repo in $repos; do
+    echo "Updating $repo"
+    git -C "$location/$repo" pull >/dev/null
+    #TODO: Better handle the --depth=1 issues
+  done
 }
 
 help() {
@@ -235,6 +263,10 @@ case "$@" in
   "install"* | "download"*)
     shift
     install "$@"
+    ;;
+  "update"*)
+    shift
+    update "$@"
     ;;
   *)
     echo Invalid option provided
