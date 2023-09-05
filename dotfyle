@@ -135,6 +135,8 @@ install() {
   repo=${repo#*github.com[/:]}
   repo=${repo#*dotfyle.com[/:]}
   repo=${repo%.git}
+  repo=${repo%/tree/*}
+  repo=${repo%/blob/*}
   if ! git ls-remote --exit-code git@github.com:"$repo" >/dev/null 2>&1; then
     substring="${repo%*"-"*}"
     if [ "$substring" != "$repo" ]; then
