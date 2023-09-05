@@ -6,10 +6,10 @@ A command line tool to test out Neovim configs found on
 
 ### Requirements
 
-- fzf
-
-dotfyle-cli is posix complient so should run anywhere as long as
+- fzf - dotfyle-cli is posix complient so should run anywhere as long as
 [fzf](https://github.com/junegunn/fzf) is available
+- git - Some features of dotfyle-cli will only work if git is available
+  (install/update)
 
 ### installation
 
