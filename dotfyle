@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-dir_name="dotfyle"
+dir_name="neovim-configs"
 
 is_ignored() {
   found=false
