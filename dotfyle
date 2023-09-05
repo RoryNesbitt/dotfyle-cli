@@ -113,7 +113,16 @@ remove() {
 }
 
 help() {
-cmd=$2
+
+  case "$1" in
+    "-h"|"--help")
+      cmd="$2"
+      ;;
+    *)
+      cmd="$1"
+      ;;
+  esac
+
   case "$cmd" in
     "run")
       echo "Usage:
