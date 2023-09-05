@@ -34,7 +34,8 @@ likely to be rare so this is not the recommended method of installation.
 start by installing some configs
 ```sh
 dotfyle install https://dotfyle.com/codicocodes/dotfiles-nvim
-dotfyle install https://github.com/RoryNesbitt/RNvim
+dotfyle install https://github.com/folke/dot/tree/master/nvim
+dotfyle install RoryNesbitt/RNvim
 ```
 
 #### Running Neovim
