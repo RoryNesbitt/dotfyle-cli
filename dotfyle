@@ -225,6 +225,13 @@ Options:
                         directory.
   "
       ;;
+    "update")
+      echo "Usage:
+  dotfyle update        Update all installed configs
+
+                        This option runs a git pull on all known configs.
+  "
+      ;;
     *)
       echo "Usage:
   dotfyle run [options] Select a config to load neovim with
