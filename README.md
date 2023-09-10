@@ -4,6 +4,8 @@ dotfyle-cli
 A command line tool to test out Neovim configs found on
 [dotfyle](https://dotfyle.com) (or github)
 
+![example](https://user-images.githubusercontent.com/33930918/266866395-ce0b89cc-a953-4208-abeb-465f03f7b752.png)
+
 ## Requirements
 
 - fzf - dotfyle-cli is posix complient so should run anywhere as long as
