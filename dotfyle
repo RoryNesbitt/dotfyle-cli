@@ -50,7 +50,12 @@ find_git() {
 }
 
 select_config() {
-  find_init "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="cat $HOME/.config/$dir_name/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
+  if [ "$1" = "git" ]; then
+    find=find_git
+  else
+    find=find_init
+  fi
+  $find "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="cat $HOME/.config/$dir_name/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
 }
 
 check_config() {
@@ -124,7 +129,7 @@ purge() {
 }
 
 remove() {
-  appname="$(select_config)"
+  appname="$(select_config "git")"
   if [ -n "$appname" ]; then
     purge "$appname"
   fi
