@@ -55,7 +55,7 @@ select_config() {
   else
     find=find_init
   fi
-  $find "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="cat $HOME/.config/$dir_name/{}/init.*" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
+  $find "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="find $HOME/.config/$dir_name/{} -name 'init.[lv][ui][am]' -type f -exec cat \{} + -quit" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
 }
 
 check_config() {
