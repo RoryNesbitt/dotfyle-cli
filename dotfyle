@@ -270,7 +270,7 @@ case "$@" in
     shift
     run "$@"
     ;;
-  "rm"*)
+  "rm"* | "remove"*)
     shift
     remove "$@"
     ;;
