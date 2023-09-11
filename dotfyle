@@ -102,7 +102,13 @@ run() {
   fi
   if [ -n "$appname" ]; then
     echo "$appname" > "$HOME/.config/$dir_name/.last_used"
-    NVIM_APPNAME="$dir_name/$appname" exec nvim
+    apppath=$(dirname "$appname")
+    NVIM_APPNAME=$(basename "$appname") \
+    XDG_CONFIG_HOME="$HOME/.config/$dir_name/$apppath" \
+    XDG_DATA_HOME="$HOME/.local/share/$dir_name/$apppath" \
+    XDG_STATE_HOME="$HOME/.local/state/$dir_name/$apppath" \
+    XDG_CACHE_HOME="$HOME/.cache/$dir_name/$apppath" \
+    exec nvim
   fi
 }
 
