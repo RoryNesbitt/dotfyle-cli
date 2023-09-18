@@ -263,7 +263,7 @@ case "$@" in
   *"-h" | *"--help" | "-h"* | "--help"*)
     help "$@"
     ;;
-  "" | "-a" | "--ask" | "-s" | "--select")
+  "" | "-a" | "--ask" | "-s"* | "--select"*)
     run "$@"
     ;;
   "run"*)
