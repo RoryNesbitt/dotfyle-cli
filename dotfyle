@@ -70,6 +70,8 @@ run() {
   location="$HOME/.config/$dir_name"
   case "$@" in
     "")
+      ;;
+    "-l"|"--last-used")
       if [ -f "$location/.last_used" ];then
         last_used=$(cat "$location/.last_used")
         if check_config "$last_used"; then
@@ -78,6 +80,7 @@ run() {
       fi
       ;;
     "-a" | "--ask")
+      echo "This option is depreciated, it is now the default behaviour"
       shift
       ;;
     "-s"*| "--select"*)
