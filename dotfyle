@@ -179,6 +179,8 @@ update() {
         case "$soi" in
           "s"|"stash")
             echo "Stashing your changes"
+            echo "you can find them at:"
+            echo "$location/$repo"
             $g stash >/dev/null
             $g pull >/dev/null
             done=true
