@@ -297,6 +297,15 @@ Options:
   -s|--skip             Skip this repo and continue
   "
       ;;
+    "upgrade")
+      echo "Usage:
+  dotfyle upgrade       Upgrade dotfyle-cli itself
+
+                        This option runs curl to download the latest version
+                        of dotfyle-cli from github. It will save to wherever
+                        the current dotfyle-cli is located.
+  "
+      ;;
     *)
       echo "Usage:
   dotfyle run [options] Select a config to load neovim with
@@ -304,6 +313,7 @@ Options:
   dotfyle purge         Remove all configs and related files
   dotfyle install [URL] Install a config from the url provided.
   dotfyle update        Update all installed configs
+  dotfyle upgrade       Upgrade dotfyle-cli itself
   dotfyle               Alias of dotfyle run
 
 Options:
