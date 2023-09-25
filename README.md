@@ -19,15 +19,7 @@ assumes you have `~/.local/bin` in your PATH, feel free to change the directory
 ```sh
 curl -o ~/.local/bin/dotfyle https://raw.githubusercontent.com/RoryNesbitt/dotfyle-cli/main/dotfyle
 ```
-
-alternatively you can clone this repo and then add that location to your PATH.
-e.g.
-```sh
-git clone git@github.com:RoryNesbitt/dotfyle-cli ~/.local/dotfyle-cli
-echo 'export PATH="$HOME/.local/dotfyle-cli:$PATH"' >> ~/.bashrc
-```
-This is more bloated but will make getting updates simpler, however updates are
-likely to be rare so this is not the recommended method of installation.
+You will then be able to get the new version with `dotfyle upgrade`
 
 ## Using dotfyle-cli
 

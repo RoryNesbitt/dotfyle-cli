@@ -208,6 +208,11 @@ update() {
   done
 }
 
+upgrade() {
+  path="$(readlink -e -- "$0")"
+  curl -o "$path" https://raw.githubusercontent.com/RoryNesbitt/dotfyle-cli/main/dotfyle
+}
+
 help() {
 
   case "$1" in
@@ -336,6 +341,10 @@ case "$@" in
   "update"*)
     shift
     update "$@"
+    ;;
+  "upgrade"*)
+    shift
+    upgrade "$@"
     ;;
   *)
     echo Invalid option provided
