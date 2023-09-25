@@ -240,7 +240,7 @@ help() {
 
 Options:
   -h|--help             Print the help. Can be used after an above option
-  -a|--ask              Ask which config to load
+  -l|--last-used        Load the most recently used config
   -s|--select [config]  Select the specific config
   "
       ;;
@@ -321,7 +321,7 @@ Options:
 
 Options:
   -h|--help             Print the help. Can be used after an above option
-  -a|--ask              Ask which config to load
+  -l|--last-used        Load the most recently used config
   -s|--select [config]  Select the specific config
   "
       ;;
