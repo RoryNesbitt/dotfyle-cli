@@ -160,17 +160,23 @@ update() {
   for repo in $repos; do
     g="git -C $location/$repo"
     changes=$($g diff --name-only)
-    if [ -z $changes ]; then
+    if [ -z "$changes" ]; then
       echo "Updating $repo"
       $g pull >/dev/null
     else
-      echo "Found the following modified files:"
-      echo "$changes"
       echo ""
+      echo "Cannot update $repo, found the following changes:"
+      echo "$changes"
       while [ -z $done ]; do
-        echo "Would you like to stash, overwrite, or ignore? [aoI]"
-        read -r aoi
-        case "$aoi" in
+        if [ -v 1 ]; then
+          soi="$1"
+          soi=${soi#-}
+          soi=${soi#-}
+        else
+          echo "Would you like to stash, overwrite, or ignore? [soI]"
+          read -r soi
+        fi
+        case "$soi" in
           "s"|"stash")
             echo "Stashing your changes"
             $g stash >/dev/null
@@ -183,17 +189,22 @@ update() {
             $g pull >/dev/null
             done=true
             ;;
-          "i"|"ignore")
+          ""|"i"|"ignore")
             echo "Skipping"
             echo "You can find this config at:"
             echo "$location/$repo"
             done=true
             ;;
           *)
-            echo "Unknown option"
+            if [ -v 1 ]; then
+              shift
+            else
+              echo "Unknown option"
+            fi
             ;;
         esac
       done
+      unset done
     fi
   done
 }
@@ -273,6 +284,13 @@ Options:
   dotfyle update        Update all installed configs
 
                         This option runs a git pull on all known configs.
+                        If there are any unstaged changes, it will prompt
+                        you for how to handle them.
+
+Options:
+  -s|--stash            Stash the changes, then update
+  -o|--overwrite        Overwrite local files, then update
+  -i|--ignore           Ignore this repo and continue
   "
       ;;
     *)
