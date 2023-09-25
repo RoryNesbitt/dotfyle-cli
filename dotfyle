@@ -160,12 +160,12 @@ update() {
   for repo in $repos; do
     g="git -C $location/$repo"
     changes=$($g diff --name-only)
+    echo "Updating $repo"
     if [ -z "$changes" ]; then
-      echo "Updating $repo"
       $g pull >/dev/null
     else
       echo ""
-      echo "Cannot update $repo, found the following changes:"
+      echo "Found the following unstaged changes:"
       echo "$changes"
       while [ -z $done ]; do
         if [ -v 1 ]; then
