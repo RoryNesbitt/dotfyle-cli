@@ -40,10 +40,9 @@ dotfyle
 # or
 dotfyle run
 ```
-From here the last used config will become the default, and to select a new on
-use
+Or run your last used with
 ```sh
-dotfyle run --ask
+dotfyle run --last-used
 ```
 
 ### Getting more help/config management
