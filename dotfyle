@@ -159,6 +159,7 @@ update() {
   repos=$(find_git "$location")
   for repo in $repos; do
     echo "Updating $repo"
+    git -C "$location/$repo" reset --hard HEAD >/dev/null
     git -C "$location/$repo" pull >/dev/null
     #TODO: Better handle the --depth=1 issues
   done
