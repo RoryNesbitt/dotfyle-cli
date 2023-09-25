@@ -158,10 +158,43 @@ update() {
   location="$HOME/.config/$dir_name"
   repos=$(find_git "$location")
   for repo in $repos; do
-    echo "Updating $repo"
-    git -C "$location/$repo" reset --hard HEAD >/dev/null
-    git -C "$location/$repo" pull >/dev/null
-    #TODO: Better handle the --depth=1 issues
+    g="git -C $location/$repo"
+    changes=$($g diff --name-only)
+    if [ -z $changes ]; then
+      echo "Updating $repo"
+      $g pull >/dev/null
+    else
+      echo "Found the following modified files:"
+      echo "$changes"
+      echo ""
+      while [ -z $done ]; do
+        echo "Would you like to stash, overwrite, or ignore? [aoI]"
+        read -r aoi
+        case "$aoi" in
+          "s"|"stash")
+            echo "Stashing your changes"
+            $g stash >/dev/null
+            $g pull >/dev/null
+            done=true
+            ;;
+          "o"|"overwrite")
+            echo "Overwriting local files"
+            $g reset --hard HEAD >/dev/null
+            $g pull >/dev/null
+            done=true
+            ;;
+          "i"|"ignore")
+            echo "Skipping"
+            echo "You can find this config at:"
+            echo "$location/$repo"
+            done=true
+            ;;
+          *)
+            echo "Unknown option"
+            ;;
+        esac
+      done
+    fi
   done
 }
 
