@@ -18,6 +18,7 @@ A command line tool to test out Neovim configs found on
 assumes you have `~/.local/bin` in your PATH, feel free to change the directory
 ```sh
 curl -o ~/.local/bin/dotfyle https://raw.githubusercontent.com/RoryNesbitt/dotfyle-cli/main/dotfyle
+chmod +x ~/.local/bin/dotfyle
 ```
 You will then be able to get the new version with `dotfyle upgrade`
 
