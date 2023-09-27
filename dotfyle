@@ -155,6 +155,7 @@ update() {
           echo "Would you like to keep, overwrite, or skip? [koS]"
           read -r kos
         fi
+        kos=$(echo $kos | tr '[:upper:]' '[:lower:]')
         case "$kos" in
           "k"|"keep")
             echo "Keeping local changes"
