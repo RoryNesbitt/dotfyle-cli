@@ -13,9 +13,9 @@ is_ignored() {
   $found
 }
 
-find_init() {
-  if ls "$1"/init.lua 1> /dev/null 2>&1 \
-  || ls "$1"/init.vim 1> /dev/null 2>&1; then
+find_repo() {
+  if ( [ "$2" = "git" ] && [ -d "$1"/.git ] ) || \
+  ( [ "$2" != "git" ] && [ -f "$1"/init.lua -o -f "$1"/init.vim ] ); then
     path=${1#"$HOME/.config/$dir_name/"}
     echo "$path"
   else
@@ -24,25 +24,7 @@ find_init() {
         if is_ignored "$pathname"; then
           continue # skip these directories
         elif [ -d "$pathname" ]; then
-          find_init "$pathname"
-        fi
-      done
-    done
-  fi
-}
-
-find_git() {
-  #TODO: Combine this with find_init
-  if ls "$1"/.git 1> /dev/null 2>&1; then
-    path=${1#"$HOME/.config/$dir_name/"}
-    echo "$path"
-  else
-    for x in "*" ".*"; do
-      for pathname in "$1/"$x; do
-        if is_ignored "$pathname"; then
-          continue # skip these directories
-        elif [ -d "$pathname" ]; then
-          find_git "$pathname"
+          find_repo "$pathname" "$2"
         fi
       done
     done
@@ -50,12 +32,7 @@ find_git() {
 }
 
 select_config() {
-  if [ "$1" = "git" ]; then
-    find=find_git
-  else
-    find=find_init
-  fi
-  $find "$HOME/.config/$dir_name" | fzf --prompt="Config: " --preview="find $HOME/.config/$dir_name/{} -name 'init.[lv][ui][am]' -type f -exec cat \{} + -quit" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
+  find_repo "$HOME/.config/$dir_name" "$1" | fzf --prompt="Config: " --preview="find $HOME/.config/$dir_name/{} -name 'init.[lv][ui][am]' -type f -exec cat \{} + -quit" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
 }
 
 check_config() {
@@ -159,7 +136,7 @@ install() {
 
 update() {
   location="$HOME/.config/$dir_name"
-  repos=$(find_git "$location")
+  repos=$(find_repo "$location" "git")
   for repo in $repos; do
     g="git -C $location/$repo"
     changes=$($g diff --name-only)
