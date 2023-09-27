@@ -100,11 +100,19 @@ purge() {
         ;;
     esac
   fi
-  echo Removing "$1"
-  rm -rf "$HOME/.config/$dir_name/$1"
-  rm -rf "$HOME/.cache/$dir_name/$1"
-  rm -rf "$HOME/.local/share/$dir_name/$1"
-  rm -rf "$HOME/.local/state/$dir_name/$1"
+  dir="$1"
+  parent_dir=${dir%/*}
+  child_dir=${dir#*/}
+  echo Removing "$dir"
+  if [ "$(ls "$HOME/.config/$dir_name/$parent_dir" -I "$child_dir")" = "" ]; then
+    echo "$parent_dir/ only contains $child_dir/"
+    echo Removing "$parent_dir"
+    dir="$parent_dir"
+  fi
+  rm -rf "$HOME/.config/$dir_name/$dir"
+  rm -rf "$HOME/.cache/$dir_name/$dir"
+  rm -rf "$HOME/.local/share/$dir_name/$dir"
+  rm -rf "$HOME/.local/state/$dir_name/$dir"
 }
 
 remove() {
