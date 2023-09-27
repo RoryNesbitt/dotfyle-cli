@@ -7,7 +7,6 @@ is_ignored() {
   case "$1" in
     *"." | *".." | *"*" | *".git")
       found=true
-      return
       ;;
   esac
   $found
