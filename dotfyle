@@ -313,6 +313,15 @@ Options:
   esac
 }
 
+if [ "$1" = "-d" -o "$1" = "--dir" ]; then
+  if [ -z "$2" ]; then
+    echo "No directory provided"
+    exit 1
+  fi
+  dir_name="$2"
+  shift 2
+fi
+
 case "$@" in
   *"-h" | *"--help" | "-h"* | "--help"*)
     help "$@"
