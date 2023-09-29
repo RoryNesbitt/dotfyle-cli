@@ -305,6 +305,7 @@ Options:
   dotfyle               Alias of dotfyle run
 
 Options:
+  -d|--dir [dir]        Select a different directory to use. This option must be first
   -h|--help             Print the help. Can be used after an above option
   -l|--last-used        Load the most recently used config
   -s|--select [config]  Select the specific config
