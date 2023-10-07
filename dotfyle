@@ -5,7 +5,7 @@ dir_name="neovim-configs"
 is_ignored() {
   found=false
   case "$1" in
-    *"." | *".." | *"*" | *".git")
+    *"/." | *"/.." | *"/*" | *"/.git")
       found=true
       ;;
   esac
@@ -13,8 +13,8 @@ is_ignored() {
 }
 
 find_repo() {
-  if ( [ "$2" = "git" ] && [ -d "$1"/.git ] ) || \
-  ( [ "$2" != "git" ] && [ -f "$1"/init.lua -o -f "$1"/init.vim ] ); then
+  if { [ "$2" = "git" ] && [ -d "$1"/.git ] ; } || \
+  { [ "$2" != "git" ] && [ -f "$1"/init.lua ] || [ -f "$1"/init.vim ] ; }; then
     path=${1#"$HOME/.config/$dir_name/"}
     echo "$path"
   else
@@ -158,8 +158,8 @@ update() {
       echo ""
       echo "Found the following unstaged changes:"
       echo "$changes"
-      while [ -z $done ]; do
-        if [ -v 1 ]; then
+      while [ -z "$complete" ]; do
+        if [ "$1" != "" ]; then
           kos="$1"
           kos=${kos#-}
           kos=${kos#-}
@@ -167,27 +167,27 @@ update() {
           echo "Would you like to keep, overwrite, or skip? [koS]"
           read -r kos
         fi
-        kos=$(echo $kos | tr '[:upper:]' '[:lower:]')
+        kos=$(echo "$kos" | tr '[:upper:]' '[:lower:]')
         case "$kos" in
           "k"|"keep")
             echo "Keeping local changes"
             $g pull --autostash >/dev/null
-            done=true
+            complete=true
             ;;
           "o"|"overwrite")
             echo "Overwriting local files"
             $g reset --hard HEAD >/dev/null
             $g pull >/dev/null
-            done=true
+            complete=true
             ;;
           ""|"s"|"skip")
             echo "Skipping"
             echo "You can find this config at:"
             echo "$location/$repo"
-            done=true
+            complete=true
             ;;
           *)
-            if [ -v 1 ]; then
+            if [ "$1" != "" ]; then
               shift
             else
               echo "Unknown option"
@@ -195,7 +195,7 @@ update() {
             ;;
         esac
       done
-      unset done
+      unset complete
     fi
   done
 }
@@ -318,7 +318,7 @@ Options:
   esac
 }
 
-if [ "$1" = "-d" -o "$1" = "--dir" ]; then
+if [ "$1" = "-d" ] || [ "$1" = "--dir" ]; then
   if [ -z "$2" ]; then
     echo "No directory provided"
     exit 1
