@@ -32,7 +32,11 @@ find_repo() {
 
 select_config() {
   if command -v fzf >/dev/null; then
-    find_repo "$HOME/.config/$dir_name" "$1" | fzf --prompt="Config: " --preview="find $HOME/.config/$dir_name/{} -name 'init.[lv][ui][am]' -type f -exec cat \{} + -quit" --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up --height=100% --border
+    find_repo "$HOME/.config/$dir_name" "$1" | \
+      fzf --prompt="Config: " \
+      --preview="find $HOME/.config/$dir_name/{} -name 'init.[lv][ui][am]' -type f -exec cat \{} + -quit" \
+      --preview-window=right:70%:wrap --bind=ctrl-f:page-down,ctrl-b:page-up \
+      --height=100% --border
   else
     echo "fzf not found, please install it to use this option" >&2
   fi
